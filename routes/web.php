@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ClientsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'client']);
+Route::get('/', [ClientsController::class, 'index']);
+
+Route::resource('clients', ClientsController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
