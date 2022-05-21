@@ -7,8 +7,10 @@
                 
                 <div class="bg-white">
 
-                    <form action="/clients/{{ $client->id }}" method="PUT">
+                    <form action="/clients/{{ $client->id }}" method="POST">
                         @csrf
+
+                        <input type="hidden" name="_method" value="PUT">
 
                         <input type="text" name="surname" placeholder="Imię" value="{{ $client->surname ?? '' }}">
                         <input type="text" name="name" placeholder="Nazwisko" value="{{ $client->name ?? '' }}">

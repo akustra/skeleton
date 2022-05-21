@@ -91,7 +91,7 @@ class ClientsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { dd('update');
+    {
         $client = Client::where('id', $id)->first();
 
         $surname = $request->get('surname');
