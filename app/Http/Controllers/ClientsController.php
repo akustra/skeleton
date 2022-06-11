@@ -12,9 +12,17 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
+        $searchPhrase = $request->get('search', '');
+
+        if (\mb_strlen($searchPhrase)) {
+            $clients = Client::where('name', 'LIKE', '%' . $searchPhrase . '%')
+                ->orWhere('surname', 'LIKE', '%' . $searchPhrase . '%')
+                ->paginate(5);
+        } else {
+            $clients = Client::paginate(5);
+        }
 
         return view('clients.index', ['clients' => $clients]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Link;
 use Illuminate\Console\Command;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ class ReadApi extends Command
 
     public function handle()
     {
-        $this->info("Text from command");
+        $this->info("Running command read-api");
 
         $response = \Http::get('https://onet.pl');
 
@@ -32,10 +33,25 @@ class ReadApi extends Command
         $filtered = [];
         foreach ($nodeValues as $nodeValue) {
             $filtered[] = [Str::squish($nodeValue[0][1]), Str::squish($nodeValue[0][2])];
+        } // ~474 linków
+
+        // $fileteredInner = [];
+        // foreach($filtered as $array) {
+        //     if(Str::startsWith($array[1], 'https://www.onet.pl')) {
+        //         $fileteredInner[] = [$array[0], $array[1]];
+        //     }
+        // } // ~145 linków
+
+        $filteredInner = \array_filter($filtered, function ($item) {
+            return Str::startsWith($item[1], 'https://www.onet.pl');
+        });
+
+        foreach ($filteredInner as $item) {
+            Link::firstOrCreate([
+                'url' => $item[1],
+                'title' => $item[0]
+            ]);
         }
-
-        dd($nodeValues);
-
 
         return 0;
     }

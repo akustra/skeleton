@@ -3,13 +3,26 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden ">
 
-                <h1 class="text-xl font-semibold">Klienci</h1>
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <h1 class="text-xl font-semibold">Klienci</h1>
+                    </div>
 
-                <div>
-                    <a href="/clients/create">Nowy klient</a>
+                    <div class="text-right">
+                        <div class="inline-block ml-4">
+                            <a href="/clients/create" class="bg-red-900 text-white px-4 py-2 hover:bg-red-700">Nowy klient</a>
+                        </div>
+
+                        <div class="inline-block ml-4">
+                            <form action="/search-clients" method="GET">
+                                <input type="text" name="search" placeholder="Szukaj" />
+                                <button type="submit" class="bg-gray-900 text-white px-4 py-2 hover:bg-gray-700">Szukaj</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="bg-white">
+                <div class="bg-white mb-8">
 
                     @foreach($clients as $client)
                     <div class="flex gap-8 bg-gray-100 p-4 shadow-xl hover:bg-gray-200">
@@ -28,6 +41,8 @@
                     @endforeach
 
                 </div>
+
+                <div>{{ $clients->links() }}</div>
             </div>
         </div>
     </div>
